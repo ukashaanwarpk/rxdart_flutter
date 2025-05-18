@@ -16,9 +16,10 @@ class SearchViewResult extends StatelessWidget {
           final result = snapshot.data!;
 
           if (result is SearchResultHasError) {
-            return const Text('Got error');
+            debugPrint('Got error ${result.error}');
+            return Text('Got error ${result.error}');
           } else if (result is SearchResultLoading) {
-            return const CircularProgressIndicator();
+            return Center(child: const CircularProgressIndicator());
           } else if (result is SearchResultNoResult) {
             return const Text(
               'No results found for your search term. Try with another one',
@@ -26,26 +27,28 @@ class SearchViewResult extends StatelessWidget {
           } else if (result is SearchResultWithResult) {
             final results = result.results;
 
-            return ListView.builder(
-              itemCount: results.length,
-              itemBuilder: (context, index) {
-                final item = results[index];
+            return Expanded(
+              child: ListView.builder(
+                itemCount: results.length,
+                itemBuilder: (context, index) {
+                  final item = results[index];
 
-                final String title;
+                  final String title;
 
-                if (item is Animal) {
-                  title = 'Animal';
-                } else if (item is Person) {
-                  title = 'Person';
-                } else {
-                  title = 'Unknown';
-                }
+                  if (item is Animal) {
+                    title = 'Animal';
+                  } else if (item is Person) {
+                    title = 'Person';
+                  } else {
+                    title = 'Unknown';
+                  }
 
-                return ListTile(
-                  title: Text(title),
-                  subtitle: Text(item.toString()),
-                );
-              },
+                  return ListTile(
+                    title: Text(title),
+                    subtitle: Text(item.toString()),
+                  );
+                },
+              ),
             );
           } else {
             return const Text('Unknown state');

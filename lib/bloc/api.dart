@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:rxdart_flutter/models/animal.dart';
 import 'package:rxdart_flutter/models/person.dart';
 import 'package:rxdart_flutter/models/thing.dart';
@@ -14,31 +15,36 @@ class Api {
   Api();
 
   Future<List<Thing>> search(SearchTerm searchTerm) async {
-    final term = searchTerm.trim().toLowerCase();
+    try {
+      final term = searchTerm.trim().toLowerCase();
 
-    // search in the cache
+      // search in the cache
 
-    final cachedResults = _extractThingsUsingSearchTerm(term);
+      final cachedResults = _extractThingsUsingSearchTerm(term);
 
-    if (cachedResults != null) {
-      return cachedResults;
+      if (cachedResults != null) {
+        return cachedResults;
+      }
+
+      // so we don't have the values cached, let's call api
+
+      final persons = await _getJson(
+        'http://192.168.100.3:5500/apis/persons.json',
+      ).then((json) => json.map((value) => Person.fromJson(value)));
+
+      _persons = persons.toList();
+
+      final animals = await _getJson(
+        'http://192.168.100.3:5500/apis/animals.json',
+      ).then((json) => json.map((value) => Animal.fromJson(value)));
+
+      _animals = animals.toList();
+
+      return _extractThingsUsingSearchTerm(term) ?? [];
+    } catch (e, stackTrace) {
+      debugPrint('The error is $e, $stackTrace');
+      rethrow;
     }
-
-    // so we don't have the values cached, let's call api
-
-    final persons = await _getJson(
-      'http://127.0.0.1:5500/apis/persons.json',
-    ).then((json) => json.map((value) => Person.fromJson(value)));
-
-    _persons = persons.toList();
-
-    final animals = await _getJson(
-      'http://127.0.0.1:5500/apis/animals.json',
-    ).then((json) => json.map((value) => Animal.fromJson(value)));
-
-    _animals = animals.toList();
-
-    return _extractThingsUsingSearchTerm(term) ?? [];
   }
 
   List<Thing>? _extractThingsUsingSearchTerm(SearchTerm term) {
