@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart' show immutable;
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_flutter/bloc/api.dart';
 import 'package:rxdart_flutter/bloc/search_result.dart';
 
+@immutable
 class SearchBloc {
-  final Sink<String> search;
-  final Stream<SearchResult?> results;
+  final Sink<String> search; // write
+  final Stream<SearchResult?> results; // read
 
   void dispose() {
     search.close();
@@ -28,7 +30,9 @@ class SearchBloc {
                           ? SearchResultNoResult()
                           : SearchResultWithResult(results),
                 )
-                .startWith(SearchResultLoading())
+                .startWith(
+                  SearchResultLoading(),
+                ) // startWith emits a value before the original stream
                 .onErrorReturnWith((error, _) => SearchResultHasError(error));
           }
         });
