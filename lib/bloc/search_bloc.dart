@@ -39,5 +39,5 @@ class SearchBloc {
     return SearchBloc._(search: textChanges.sink, results: results);
   }
 
-  SearchBloc._({required this.search, required this.results});
+  const SearchBloc._({required this.search, required this.results});
 }
