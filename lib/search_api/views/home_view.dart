@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart_flutter/bloc/api.dart';
-import 'package:rxdart_flutter/bloc/search_bloc.dart';
-import 'package:rxdart_flutter/views/search_view_result.dart';
+import 'package:rxdart_flutter/search_api/bloc/api.dart';
+import 'package:rxdart_flutter/search_api/bloc/search_bloc.dart';
+import 'package:rxdart_flutter/search_api/views/search_view_result.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

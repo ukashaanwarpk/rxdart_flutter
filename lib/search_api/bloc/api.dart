@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:rxdart_flutter/models/animal.dart';
-import 'package:rxdart_flutter/models/person.dart';
-import 'package:rxdart_flutter/models/thing.dart';
+import 'package:rxdart_flutter/search_api/models/animal.dart';
+import 'package:rxdart_flutter/search_api/models/person.dart';
+
+import 'package:rxdart_flutter/search_api/models/thing.dart';
 
 typedef SearchTerm = String;
 
