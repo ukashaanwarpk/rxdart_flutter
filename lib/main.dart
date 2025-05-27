@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart_flutter/filter_chip_screen.dart';
 import 'package:rxdart_flutter/switch_map_stream_example.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: SwitchMapStreamExample(),
+      home: FilterChipScreen(),
     );
   }
 }

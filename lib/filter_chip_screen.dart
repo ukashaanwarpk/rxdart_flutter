@@ -67,12 +67,77 @@ class FilterChipScreen extends StatefulWidget {
 }
 
 class _FilterChipScreenState extends State<FilterChipScreen> {
+  late final Bloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    bloc = Bloc(things: things);
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filter Chip with RxDart'),
         centerTitle: true,
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            StreamBuilder(
+              stream: bloc.currentTypeOfThings,
+
+              builder: (context, snapshot) {
+                final selectedTypeOfThing = snapshot.data;
+                return Wrap(
+                  spacing: 12,
+                  children:
+                      TypeOFThings.values.map((typeOfThing) {
+                        return FilterChip(
+                          selected: selectedTypeOfThing == typeOfThing,
+                          selectedColor: Colors.blue[100],
+                          label: Text(typeOfThing.name),
+                          onSelected: (selected) {
+                            final type = selected ? typeOfThing : null;
+                            bloc.setTypeOfThings.add(type);
+                          },
+                        );
+                      }).toList(),
+                );
+              },
+            ),
+
+            Expanded(
+              child: StreamBuilder<Iterable<Things>>(
+                stream: bloc.things,
+                builder: (context, snapshot) {
+                  final things = snapshot.data ?? [];
+                  return ListView.builder(
+                    itemCount: things.length,
+                    itemBuilder: (context, index) {
+                      final thing = things.elementAt(index);
+                      return ListTile(
+                        title: Text(thing.name),
+                        subtitle: Text(thing.type.name),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
