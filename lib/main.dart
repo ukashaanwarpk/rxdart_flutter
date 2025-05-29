@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart_flutter/combine_lastest_stream_example.dart';
 import 'package:rxdart_flutter/filter_chip_screen.dart';
 import 'package:rxdart_flutter/switch_map_stream_example.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: FilterChipScreen(),
+      home: CombineLastestStreamExample(),
     );
   }
 }
