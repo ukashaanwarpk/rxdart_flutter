@@ -9,9 +9,9 @@ Stream<String> getNames({required String filePath}) {
   return Stream.fromFuture(names).transform(const LineSplitter());
 }
 
-Stream<String> getAllNames() => getNames(
-  filePath: 'assets/texts/cats.txt',
-).concatWith([getNames(filePath: 'assets/texts/dogs.txt')]);
+Stream<String> getAllNames() => getNames(filePath: 'assets/texts/cats.txt')
+    .concatWith([getNames(filePath: 'assets/texts/dogs.txt')])
+    .delay(const Duration(seconds: 3));
 
 class ConcatStreamExampleScreen extends StatelessWidget {
   const ConcatStreamExampleScreen({super.key});
@@ -35,7 +35,7 @@ class ConcatStreamExampleScreen extends StatelessWidget {
 
               return ListView.separated(
                 itemCount: names.length,
-                separatorBuilder: (_, __) => const Divider(),
+                separatorBuilder: (_, __) => const Divider(color: Colors.black),
                 itemBuilder: (context, index) {
                   return ListTile(title: Text(names[index]));
                 },
