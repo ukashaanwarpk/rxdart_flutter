@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart_flutter/combine_lastest_stream_example.dart';
 import 'package:rxdart_flutter/concat_stream_example_screen.dart';
-import 'package:rxdart_flutter/filter_chip_screen.dart';
-import 'package:rxdart_flutter/switch_map_stream_example.dart';
+import 'package:rxdart_flutter/firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
