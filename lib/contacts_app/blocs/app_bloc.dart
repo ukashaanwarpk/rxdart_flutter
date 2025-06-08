@@ -100,6 +100,8 @@ class AppBloc {
     );
   }
 
+  void deleteAccount() {}
+
   // logout
 
   void logout() {
