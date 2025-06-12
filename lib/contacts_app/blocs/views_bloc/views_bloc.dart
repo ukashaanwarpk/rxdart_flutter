@@ -12,7 +12,10 @@ class ViewsBloc {
     goToView.close();
   }
 
-  const ViewsBloc._({required this.goToView, required this.currentView});
+  const ViewsBloc._({
+    required this.goToView,
+    required this.currentView,
+  });
 
   factory ViewsBloc() {
     final goToViewSubject = BehaviorSubject<CurrentView>();

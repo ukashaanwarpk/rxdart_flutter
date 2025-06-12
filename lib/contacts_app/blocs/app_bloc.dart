@@ -90,7 +90,11 @@ class AppBloc {
 
   // create Contact
 
-  void createContact(String firstName, String lastName, String phoneNumber) {
+  void createContact(
+    String firstName,
+    String lastName,
+    String phoneNumber,
+  ) {
     _contactsBloc.createContact.add(
       Contact.withoutId(
         firstName: firstName,
@@ -111,20 +115,36 @@ class AppBloc {
   Stream<Iterable<Contact>> get contact => _contactsBloc.contacts;
 
   void register(String email, String password) {
-    _authBloc.register.add(RegisterCommand(email: email, password: password));
+    _authBloc.register.add(
+      RegisterCommand(
+        email: email,
+        password: password,
+      ),
+    );
   }
 
   void login(String email, String password) {
-    _authBloc.login.add(LoginCommand(email: email, password: password));
+    _authBloc.login.add(
+      LoginCommand(
+        email: email,
+        password: password,
+      ),
+    );
   }
 
-  void goToContactListView() =>
-      _viewsBloc.goToView.add(CurrentView.contactList);
+  void goToContactListView() => _viewsBloc.goToView.add(
+    CurrentView.contactList,
+  );
 
-  void goToContactCreateContactView() =>
-      _viewsBloc.goToView.add(CurrentView.createContact);
+  void goToContactCreateContactView() => _viewsBloc.goToView.add(
+    CurrentView.createContact,
+  );
 
-  void goToRegisterView() => _viewsBloc.goToView.add(CurrentView.register);
+  void goToRegisterView() => _viewsBloc.goToView.add(
+    CurrentView.register,
+  );
 
-  void goToLoginView() => _viewsBloc.goToView.add(CurrentView.login);
+  void goToLoginView() => _viewsBloc.goToView.add(
+    CurrentView.login,
+  );
 }

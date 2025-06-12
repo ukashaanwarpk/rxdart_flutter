@@ -10,6 +10,9 @@ Future<void> showAuthError({
     context: context,
     title: authError.dialogText,
     content: authError.dialogText,
-    optionsBuilder: () => {'OK': true},
+    optionsBuilder:
+        () => {
+          'OK': true,
+        },
   );
 }

@@ -7,6 +7,12 @@ Future<bool> showDeleteDialog(BuildContext context) {
     title: 'Delete Account',
     content:
         'Are you sure you want to delete your account? you cannot undo this operation!',
-    optionsBuilder: () => {'Cancel': false, 'Delete account': true},
-  ).then((value) => value ?? false);
+    optionsBuilder:
+        () => {
+          'Cancel': false,
+          'Delete account': true,
+        },
+  ).then(
+    (value) => value ?? false,
+  );
 }
