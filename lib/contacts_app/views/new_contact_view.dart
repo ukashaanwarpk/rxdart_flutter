@@ -6,7 +6,12 @@ import 'package:rxdart_flutter/contacts_app/type_defination.dart';
 class NewContactView extends HookWidget {
   final CreateContactCallback createContact;
   final GoBackCallback goBack;
-  const NewContactView(this.createContact, this.goBack, {super.key});
+  const NewContactView({
+    super.key,
+
+    required this.createContact,
+    required this.goBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +33,9 @@ class NewContactView extends HookWidget {
             Icons.close,
           ),
         ),
+
+        title: const Text('Create a new contact'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

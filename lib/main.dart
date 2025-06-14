@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart_flutter/concat_stream_example_screen.dart';
+import 'package:rxdart_flutter/contacts_app/views/home_screen.dart';
 import 'package:rxdart_flutter/firebase_options.dart';
 
 void main() async {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: ConcatStreamExampleScreen(),
+      home: HomeScreen(),
     );
   }
 }

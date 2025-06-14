@@ -136,7 +136,7 @@ class AppBloc {
     CurrentView.contactList,
   );
 
-  void goToContactCreateContactView() => _viewsBloc.goToView.add(
+  void goToCreateContactView() => _viewsBloc.goToView.add(
     CurrentView.createContact,
   );
 
