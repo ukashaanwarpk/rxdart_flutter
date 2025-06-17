@@ -23,19 +23,25 @@ class ContactsBloc {
   final Sink<Contact> createContact;
   final Sink<Contact> deleteContact;
 
+  final Sink<void> deleteAllContact;
+
   final Stream<Iterable<Contact>> contacts;
 
   final StreamSubscription<void> _createContactSubscription;
 
   final StreamSubscription<void> _deleteContactSubscription;
 
+  final StreamSubscription<void> _deleteAllContactSubscription;
+
   void dispose() {
     userId.close();
     createContact.close();
     deleteContact.close();
+    deleteAllContact.close();
 
     _createContactSubscription.cancel();
     _deleteContactSubscription.cancel();
+    _deleteAllContactSubscription.cancel();
   }
 
   const ContactsBloc._({
@@ -43,10 +49,13 @@ class ContactsBloc {
     required this.createContact,
     required this.deleteContact,
     required this.contacts,
+    required this.deleteAllContact,
     required StreamSubscription<void> createContactSubscription,
     required StreamSubscription<void> deleteContactSubscription,
+    required StreamSubscription<void> deleteAllContactSubscription,
   }) : _createContactSubscription = createContactSubscription,
-       _deleteContactSubscription = deleteContactSubscription;
+       _deleteContactSubscription = deleteContactSubscription,
+       _deleteAllContactSubscription = deleteAllContactSubscription;
 
   factory ContactsBloc() {
     final backend = FirebaseFirestore.instance;
@@ -103,13 +112,30 @@ class ContactsBloc {
         )
         .listen((event) {});
 
+    // delete all contact
+
+    final deleteAllContacts = BehaviorSubject<void>();
+
+    final StreamSubscription<void> deleteAllContactSubscription =
+        deleteAllContacts
+            .switchMap((_) => userId.take(1).unWrap())
+            .asyncMap((userId) => backend.collection(userId).get())
+            .switchMap(
+              (collection) => Stream.fromFutures(
+                collection.docs.map((doc) => doc.reference.delete()),
+              ),
+            )
+            .listen((_) {});
+
     return ContactsBloc._(
       userId: userId,
       createContact: createContact,
       deleteContact: deleteContact,
       contacts: contacts,
+      deleteAllContact: deleteAllContacts,
       createContactSubscription: createContactSubscription,
       deleteContactSubscription: deleteContactSubscription,
+      deleteAllContactSubscription: deleteAllContactSubscription,
     );
   }
 }
