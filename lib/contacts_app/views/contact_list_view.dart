@@ -52,6 +52,7 @@ class ContactListView extends StatelessWidget {
             case ConnectionState.done:
               final contacts = snapshot.requireData;
               return ListView.builder(
+                itemCount: contacts.length,
                 itemBuilder: (context, index) {
                   final contact = contacts.elementAt(index);
                   return ContactListTile(

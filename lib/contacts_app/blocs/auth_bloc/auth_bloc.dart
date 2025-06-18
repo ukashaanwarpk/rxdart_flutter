@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_flutter/contacts_app/blocs/auth_bloc/auth_error.dart';
@@ -96,7 +95,7 @@ class AuthBloc {
 
     final Stream<AuthError?> loginError = login
         .setLoading(true, onSink: isLoading)
-        .asyncMap((loginCommand) async {
+        .asyncMap<AuthError?>((loginCommand) async {
           try {
             await FirebaseAuth.instance.signInWithEmailAndPassword(
               email: loginCommand.email,

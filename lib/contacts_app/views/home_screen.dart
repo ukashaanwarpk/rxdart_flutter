@@ -66,12 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    super.dispose();
-
-    appBloc.dispose();
-
     _authErrorSub?.cancel();
     _isLoadingSub?.cancel();
+    appBloc.dispose();
+    super.dispose();
   }
 
   Widget getHomePage() {
