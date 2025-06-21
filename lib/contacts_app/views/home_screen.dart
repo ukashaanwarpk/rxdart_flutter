@@ -38,28 +38,27 @@ class _HomeScreenState extends State<HomeScreen> {
       if (authError == null) {
         return;
       }
-      if (context.mounted) {
-        showAuthError(
-          authError: authError,
-          context: context,
-        );
-      }
+      if (!context.mounted) return;
+
+      showAuthError(
+        authError: authError,
+        context: context,
+      );
     });
   }
 
-  void setUpLoadingScreen() async {
+  void setUpLoadingScreen(BuildContext context) async {
     _isLoadingSub?.cancel();
 
     _isLoadingSub = appBloc.isLoading.listen((isLoading) {
+      if (!context.mounted) return;
       if (isLoading) {
-        if (mounted) {
-          LoadingScreen.instance().show(
-            context: context,
-            text: 'Loading...',
-          );
-        } else {
-          LoadingScreen.instance().hide();
-        }
+        LoadingScreen.instance().show(
+          context: context,
+          text: 'Loading...',
+        );
+      } else {
+        LoadingScreen.instance().hide();
       }
     });
   }
@@ -117,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     handleAuthErrors(context);
-    setUpLoadingScreen();
+    setUpLoadingScreen(context);
     return getHomePage();
   }
 }

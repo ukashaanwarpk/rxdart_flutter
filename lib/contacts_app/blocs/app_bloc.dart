@@ -55,7 +55,7 @@ class AppBloc {
     // calculate current view
 
     final Stream<CurrentView> currentViewBasedOnAuthStatus = authBloc.authStatus
-        .map((authStatus) {
+        .map<CurrentView>((authStatus) {
           if (authStatus is AuthStatusLoggedIn) {
             return CurrentView.contactList;
           } else {

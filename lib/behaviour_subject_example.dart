@@ -47,36 +47,3 @@ class _BehaviourSubjectExampleState extends State<BehaviourSubjectExample> {
     );
   }
 }
-
-class BehaviourSubjectExampleWithHook extends HookWidget {
-  const BehaviourSubjectExampleWithHook({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // create our behaviour subject every time widget rebuilt
-    final subject = useMemoized(() => BehaviorSubject<String>(), [key]);
-
-    // dispose of the old subject every time widget rebuilt
-
-    useEffect(() => subject.close, [subject]);
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-        title: StreamBuilder<String>(
-          stream: subject.stream.distinct().debounceTime(Duration(seconds: 1)),
-          initialData: 'Start typing here',
-          builder: (context, snapshot) {
-            return Text(snapshot.requireData);
-          },
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(12),
-        child: TextField(onChanged: subject.sink.add),
-      ),
-    );
-  }
-}

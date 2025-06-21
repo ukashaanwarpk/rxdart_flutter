@@ -37,10 +37,13 @@ class RegisterCommand extends AuthCommand {
 }
 
 extension Loading<E> on Stream<E> {
-  Stream<E> setLoading(bool isLoading, {required Sink<bool> onSink}) =>
-      doOnEach((_) => onSink.add(isLoading));
+  Stream<E> setLoadingTo(
+    bool isLoading, {
+    required Sink<bool> onSink,
+  }) => doOnEach((_) => onSink.add(isLoading));
 }
 
+@immutable
 class AuthBloc {
   final Stream<AuthStatus> authStatus;
   final Stream<AuthError?> authError;
@@ -94,7 +97,7 @@ class AuthBloc {
     final login = BehaviorSubject<LoginCommand>();
 
     final Stream<AuthError?> loginError = login
-        .setLoading(true, onSink: isLoading)
+        .setLoadingTo(true, onSink: isLoading)
         .asyncMap<AuthError?>((loginCommand) async {
           try {
             await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -108,14 +111,14 @@ class AuthBloc {
             return AuthErrorUnknown();
           }
         })
-        .setLoading(false, onSink: isLoading);
+        .setLoadingTo(false, onSink: isLoading);
 
     // register + error handling
 
     final register = BehaviorSubject<RegisterCommand>();
 
     final Stream<AuthError?> registerError = register
-        .setLoading(true, onSink: isLoading)
+        .setLoadingTo(true, onSink: isLoading)
         .asyncMap((registerCommand) async {
           try {
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -129,14 +132,14 @@ class AuthBloc {
             return AuthErrorUnknown();
           }
         })
-        .setLoading(false, onSink: isLoading);
+        .setLoadingTo(false, onSink: isLoading);
 
     // logout + error handling
 
     final logout = BehaviorSubject<void>();
 
     final Stream<AuthError?> logoutError = logout
-        .setLoading(true, onSink: isLoading)
+        .setLoadingTo(true, onSink: isLoading)
         .asyncMap((loginCommand) async {
           try {
             await FirebaseAuth.instance.signOut();
@@ -147,7 +150,7 @@ class AuthBloc {
             return AuthErrorUnknown();
           }
         })
-        .setLoading(false, onSink: isLoading);
+        .setLoadingTo(false, onSink: isLoading);
 
     // auth error = (login error + register error + logout error)
 

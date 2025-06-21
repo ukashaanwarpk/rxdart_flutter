@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart_flutter/behaviour_subject_example.dart';
 import 'package:rxdart_flutter/firebase_options.dart';
+
+import 'contacts_app/views/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: BehaviourSubjectExample(),
+      home: HomeScreen(),
     );
   }
 }

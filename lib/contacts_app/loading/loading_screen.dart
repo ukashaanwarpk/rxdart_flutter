@@ -20,7 +20,10 @@ class LoadingScreen {
     if (controller?.update(text) ?? false) {
       return;
     } else {
-      controller = _showOverlay(context: context, text: text);
+      controller = _showOverlay(
+        context: context,
+        text: text,
+      );
     }
   }
 
