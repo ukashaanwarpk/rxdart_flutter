@@ -104,7 +104,10 @@ class AppBloc {
     );
   }
 
-  void deleteAccount() {}
+  void deleteAccount() {
+    _contactsBloc.deleteAllContact.add(null);
+    _authBloc.deleteAccount.add(null);
+  }
 
   // logout
 
