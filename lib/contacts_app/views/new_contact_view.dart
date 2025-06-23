@@ -22,7 +22,7 @@ class NewContactView extends HookWidget {
       text: 'Anwar'.ifDebugging,
     );
     final phoneNumberController = useTextEditingController(
-      text: 'Ukasha'.ifDebugging,
+      text: '03068265548'.ifDebugging,
     );
 
     return Scaffold(

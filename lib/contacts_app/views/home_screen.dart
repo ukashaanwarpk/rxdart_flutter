@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
       if (authError == null) {
         return;
       }
-      if (!context.mounted) return;
 
       showAuthError(
         authError: authError,
